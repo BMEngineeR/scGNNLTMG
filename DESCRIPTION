@@ -1,4 +1,4 @@
-Package: scGNN.LTMG
+Package: scGNNLTMG
 Type: Package
 Title: LTMG implement in scGNN network
 Version: 0.1.0
