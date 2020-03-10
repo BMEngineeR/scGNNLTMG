@@ -7,6 +7,7 @@ CreateLTMGObject <- function(x = input_dir,min.cell = 0, min.gene = 0) {
           "Removed ", dim(raw.matrix)[1] - dim(raw.matrix.filterbycell)[1], " genes that total expression value is equal or less than ", min.cell, "\n",
           "Removed ", dim(raw.matrix.filterbycell)[2] - dim(raw.matrix.filterbygene)[2], " cells that number of expressed gene is equal or less than ", min.gene
   )
+  LTMG_Object<- new(Class = 'LTMG', InputData =  raw.matrix.filterbygene)
   return(LTMG_Object)
 }
 
