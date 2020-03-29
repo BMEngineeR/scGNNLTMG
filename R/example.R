@@ -4,3 +4,4 @@
 # library(scGNNLTMG)
 # object <- CreateLTMGObject(x)
 # object <-RunLTMG(object,Gene_use = 100)
+# WriteSparse(object)

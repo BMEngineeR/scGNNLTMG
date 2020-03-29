@@ -6,7 +6,7 @@
 #' @return
 #' @name WriteSparse
 #' @examples
-#' @import Matrix
+#' @importFrom  Matrix Matrix writeMM
 writesparse <- function(object = NULL) {
   my.sparse <- Matrix(object@OrdinalMatrix,sparse = T)
   writeMM(my.sparse,file = "LTMG_sparse.mtx")
