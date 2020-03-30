@@ -8,6 +8,9 @@
 #' @examples
 #' @importFrom  Matrix Matrix writeMM
 writesparse <- function(object = NULL) {
+  if(!require("Matrix")){
+    install.packages("Matrix")
+  }
   my.sparse <- Matrix(object@OrdinalMatrix,sparse = T)
   writeMM(my.sparse,file = "LTMG_sparse.mtx")
   write.table(data.frame(Barcode =colnames(my.sparse)) ,file= "barcode.txt",sep = "\t",quote = F,row.names = F)
