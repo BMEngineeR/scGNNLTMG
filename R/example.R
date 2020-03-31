@@ -4,4 +4,4 @@
 # library(scGNNLTMG)
 # object <- CreateLTMGObject(x)
 # object <-RunLTMG(object,Gene_use = 100)
-# WriteSparse(object,path = "d:/BMBL")
+# WriteSparse(object,path = "d:/BMBL",gene.name = FALSE, cell.name = FALSE)
