@@ -94,4 +94,20 @@
 # ARI(cell_label$`0`,label_benchmarker)
 # ARI(label_benchmarker,orginal_label)
 # ARI(label_benchmarker,imputed_label )
+#
+# input_path <- "d:/my_analysis/XuDong/visualization/13/13/"
+# original_matrix <- read.csv("d:/my_analysis/XuDong/visualization/13/13/Use_expression.csv",head=T,row.names=1,check.names = F)
+# object <- CreateVisObject(original_matrix = original_matrix, input_path=input_path )
+# object <- RunUmap(object)
+# object <- FindMarkerGene(object)
+
+# PlotUmap(object)
+ #PlotGenes(object, feature.name = "Cd47")
+# PlotHeatmap(object)
+# PlotScatter(object, feature.name = c("Lmbrd1","Bclaf1"))
+# PlotViolin(object,feature.name = "Slc1a3")
+# PlotNetwork(object)
+#PlotNetworkOneCluster(object,cluster.idx = 3)
+
+
 

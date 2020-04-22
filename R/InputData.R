@@ -10,7 +10,7 @@
 #' @name WriteSparse
 #' @examples
 #' @importFrom  Matrix Matrix writeMM
-writesparse <- function(object = NULL, path = "./", gene.name = FALSE, cell.name = FALSE) {
+writesparse <- function(object = NULL, path = "./", gene.name = TRUE, cell.name = TRUE) {
   if(!require("Matrix")){
     install.packages("Matrix")
   }
