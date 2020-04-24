@@ -8,12 +8,16 @@
 \usage{
 WriteSparse(object, ...)
 
-writesparse(object = NULL)
+writesparse(object = NULL, path = "./", gene.name = TRUE, cell.name = FALSE)
 
-\S4method{WriteSparse}{LTMG}(object = NULL)
+\S4method{WriteSparse}{LTMG}(object = NULL, path = "./", gene.name = TRUE, cell.name = FALSE)
 }
 \arguments{
-\item{object}{}
+\item{path}{output path}
+
+\item{gene.name}{whether output gene name for sparse matrix}
+
+\item{cell.name}{whether output cell name for sparse matrix}
 }
 \value{
 
