@@ -26,9 +26,6 @@ RunUmap <- function(object = NULL,
     install.packages("ggplot2")
   }
   embedding_matrix <- object@Embedding
-  label_cell <- object@Cluster
-  colnames(label_cell) <- c("cell","cluster")
-  label_cell$cell <- rownames(embedding_matrix)
   set.seed(seed)
   embedding_umap <-  umap(
     d = embedding_matrix,
@@ -53,16 +50,17 @@ RunUmap <- function(object = NULL,
   }
 PlotUmap <- function(obejct){
   my_embeding_matrix<- object@Reduction
-  my_embeding_matrix <- cbind(embedding_umap$layout[,1],embedding_umap$layout[,2],label_cell)
-  colnames(my_embeding_matrix)<- c("UMAP1","UMAP2","CLUSTER")
-  my_embeding_matrix$CLUSTER <- as.factor(my_embeding_matrix$CLUSTER)
+  label_cell <- object@Cluster
+  my_embeding_matrix <- cbind(my_embeding_matrix$layout[,1],my_embeding_matrix$layout[,2],label_cell)
+  colnames(my_embeding_matrix)[c(1,2)]<- c("UMAP1","UMAP2")
+  my_embeding_matrix$cluster <- as.factor(my_embeding_matrix$cluster)
   if(!require(colorspace)){
     install.packages("colorspace")
   }
-  colSide <- qualitative_hcl(length(unique(my_embeding_matrix$CLUSTER)),palette = "Dynamic")[my_embeding_matrix$CLUSTER]
-  color.idx <- cbind(CLUSTER= unique(as.character(my_embeding_matrix$CLUSTER)),values=unique(colSide))
+  colSide <- qualitative_hcl(length(unique(my_embeding_matrix$cluster)),palette = "Dynamic")[my_embeding_matrix$cluster]
+  color.idx <- cbind(cluster= unique(as.character(my_embeding_matrix$cluster)),values=unique(colSide))
   color.idx <- color.idx[order(color.idx[,1]),]
-  p<-ggplot(my_embeding_matrix,aes(x=UMAP1,y=UMAP2,color = CLUSTER ))
+  p<-ggplot(my_embeding_matrix,aes(x=UMAP1,y=UMAP2,color = cluster ))
   p<- p+geom_point(size = 1)+theme_classic()
   p <- p + scale_color_manual(breaks = color.idx[,1],values=color.idx[,2])
   print(p)
@@ -70,15 +68,16 @@ PlotUmap <- function(obejct){
 
 PlotGenes <- function(object, feature.name = NULL){
   my_embeding_matrix<- object@Reduction
-  my_embeding_matrix <- cbind(embedding_umap$layout[,1],embedding_umap$layout[,2],label_cell)
-  colnames(my_embeding_matrix)<- c("UMAP1","UMAP2","CLUSTER")
-  my_embeding_matrix$CLUSTER <- as.factor(my_embeding_matrix$CLUSTER)
+  my_embeding_matrix <- cbind(my_embeding_matrix$layout[,1],my_embeding_matrix$layout[,2])
+  colnames(my_embeding_matrix)[c(1,2)]<- c("UMAP1","UMAP2")
   my.impute.matrix <- t(object@ImputatedData)
   if(!any(grepl(paste0("^",feature.name,"$"),rownames(my.impute.matrix),ignore.case = T))){
     stop("Does not find gene in imputate matrix", feature.name, ". Maybe: ", paste0(grep(feature.name,rownames(my.impute.matrix),ignore.case = T,value = T),collapse = ","))
   }
   index <- grep(paste0("^",feature.name,"$"),rownames(my.impute.matrix),ignore.case = T)
+  my_embeding_matrix <- as.data.frame(my_embeding_matrix)
   my_embeding_matrix$VALUE <- my.impute.matrix[index,rownames(my_embeding_matrix)]
+  my_embeding_matrix <- as.data.frame(my_embeding_matrix)
   p<-ggplot(my_embeding_matrix,aes(x=UMAP1,y=UMAP2,color = VALUE ))
   p<- p+geom_point(size = 1)+theme_classic()
   p <- p + scale_color_gradient(low = "#BFC2C8" ,high = "#FF0F04")

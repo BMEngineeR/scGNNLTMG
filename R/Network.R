@@ -104,7 +104,7 @@ PlotNetworkOneCluster <- function(object = NULL,cluster.idx = "0",seed = 123){
 }
 
 
-PlotNetwork <- function(object = NULL,seed = 123){
+PlotNetwork_sampling <- function(object = NULL,seed = 123){
   my.network.data<- object@Network
   my.network.matrix <- sparseMatrix(i = as.numeric(as.character(my.network.data$node1)) + 1,
                                     j =  as.numeric(as.character(my.network.data$node2)) +1,

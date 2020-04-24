@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-FindMarkerGene <- function(object = NULL,dim = 1:10,min.pct = 0.25, logfc.threshold = 0.25){
+FindMarkerGene <- function(object = NULL,min.pct = 0.25, logfc.threshold = 0.25){
   tmp.seurat <- Seurat::CreateSeuratObject(t(object@ImputatedData))
   tmp.seurat <- Seurat::FindVariableFeatures(tmp.seurat, selection.method = "vst", nfeatures = length(object@GeneInfo))
   tmp.seurat$cell_label <- object@Cluster$cluster
@@ -103,4 +103,13 @@ PlotScatter <- function(object = NULL, feature.name = NULL){
   p <- p + geom_smooth(method=lm, fullrange=TRUE) + theme_classic()
   p
 }
+
+##
+
+
+
+
+
+
+
 

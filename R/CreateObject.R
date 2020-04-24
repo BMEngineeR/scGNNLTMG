@@ -85,3 +85,16 @@ CreateVisObject <- function(original_matrix = NULL, input_path = NULL) {
   return(Vis_Object)
 }
 
+SwitchLabel <- function(object, switch_label = NULL ){
+  my.cluster<-object@Cluster
+  switch_label <- switch_label
+  switch.cluster <- rep(NA,nrow(object@Cluster))
+  for(i in 1:nrow(switch_label)){
+    tmp.original.label <- names(switch_label[i,])
+    switch.cluster <- ifelse(as.character(my.cluster$cluster)== as.character(tmp.original.label),
+                             as.character(switch_label[i]),switch.cluster)
+  }
+  my.cluster.new<-cbind(cell=my.cluster[,1],cluster = as.character(switch.cluster),cluster_backup = as.character(my.cluster[,2]))
+  object@Cluster <- as.data.frame(my.cluster.new)
+  return(object)
+}
