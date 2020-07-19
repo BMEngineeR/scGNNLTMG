@@ -48,7 +48,7 @@ RunUmap <- function(object = NULL,
   object@Reduction <- embedding_umap
   return(object)
   }
-PlotUmap <- function(obejct){
+PlotUmap <- function(obejct,pt.size = 1.5){
   my_embeding_matrix<- object@Reduction
   label_cell <- object@Cluster
   my_embeding_matrix <- cbind(my_embeding_matrix$layout[,1],my_embeding_matrix$layout[,2],label_cell)
@@ -61,7 +61,7 @@ PlotUmap <- function(obejct){
   color.idx <- cbind(cluster= unique(as.character(my_embeding_matrix$cluster)),values=unique(colSide))
   color.idx <- color.idx[order(color.idx[,1]),]
   p<-ggplot(my_embeding_matrix,aes(x=UMAP1,y=UMAP2,color = cluster ))
-  p<- p+geom_point(size = 1)+theme_classic()
+  p<- p+geom_point(size = pt.size)+theme_classic()
   p <- p + scale_color_manual(breaks = color.idx[,1],values=color.idx[,2])
   print(p)
 }
