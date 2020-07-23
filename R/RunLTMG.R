@@ -4,13 +4,13 @@ MIN_return<-function(x){
 }
 
 #' @rdname Global_Zcut
-Global_Zcut<-function(MAT,seed = NULL) {
+Global_Zcut<-function(MAT) {
   VEC<-apply(MAT, 1, MIN_return)
-  set.seed(seed)
+  set.seed(123)
   VEC<-VEC+rnorm(length(VEC),0,0.0001)
   Zcut_univ<-0
   tryCatch({
-    set.seed(seed)
+    set.seed(123)
     MIN_fit = normalmixEM(log(VEC),k = 2)
     INTER<-Intersect2Mixtures(Mean1 = MIN_fit$mu[1],SD1 = MIN_fit$sigma[1],Weight1 = MIN_fit$lambda[1],
                               Mean2 = MIN_fit$mu[2],SD2 = MIN_fit$sigma[2],Weight2 = MIN_fit$lambda[2])
@@ -246,8 +246,8 @@ LTMG<-function(VEC,Zcut_G,k=5){
   MAT <- as.matrix(object@InputData)
   MAT <- ifelse(is.na(MAT),0,MAT)
   MAT<- MAT[rowSums(MAT)>0,colSums(MAT)>0]
-  set.seed(seed)
-  Zcut_G <- log(Global_Zcut(MAT,seed = seed))
+  set.seed(123)
+  Zcut_G <- log(Global_Zcut(MAT))
   LTMG_Res<-c()
   gene_name<-c()
   if (is.null(Gene_use)|| grepl("all", Gene_use, ignore.case = T) ){
@@ -261,7 +261,7 @@ LTMG<-function(VEC,Zcut_G,k=5){
   LTMG_Res<-c()
   SEQ<-floor(seq(from = 1,to = length(Gene_use_name),length.out = 11))
 
-  set.seed(seed)
+  set.seed(123)
   for (i in 1:length(Gene_use_name)) {
     if(i %in% SEQ){
       cat(paste0("Progress:",(grep("T",SEQ==i)-1)*10,"%\n" ))
